@@ -55,15 +55,33 @@ function veiktGajienu(laukums)
   }
   //gad visi laukumi ir atvērti
   if( laukumi.length == atvertieLaukumi.length  )
-  {
+{
     console.log('visi laukumi atvērti')
     alert('Apsveicam! \nKlikški:'+klikski+'  \nLaiks:'+laiks+' \n\nTagad vari pievienoties TOPAM');
     //dati tiek nosūtīti uz top_URL
-    document.location = 'top#'+vards+','+klikski+','+laiks
-  
-  }
+
+    let rezultats = {
+      vards: vards,
+      klikski: klikski,
+      laiks: laiks,
+      datums: new Date().toISOString().split('T')[0]
+    };
+    fetch('pievienot-rezultatu',{
+      method: 'POST',
+      headers: {'Content-Type':'application-json'},
+      body: JSON.stringify(rezultats)
+    }).then(response ==> {
+      if(response.ok) {
+        console.log('dati nosūtīti');
+        document.location = 'top#'+vards+','+klikski+','+laiks
+      } else {
+        alert('neizdevās saglabāt rezultātu')
+      }
+  });
 }
+{
 function pasleptLaukumu(laukums)
+}
 {
   document.querySelector('#'+laukums+' div').style.display='none';
 }
